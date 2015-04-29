@@ -1,0 +1,1 @@
+# argular-single-framework
