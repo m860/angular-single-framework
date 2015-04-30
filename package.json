@@ -2,8 +2,11 @@
   "name": "application-name",
   "version": "0.0.1",
   "devDependencies": {
+    "colors": "^1.1.0",
     "gulp": "^3.8.11",
     "gulp-concat": "^2.5.2",
-    "gulp-uglify": "^1.2.0"
+    "gulp-uglify": "^1.2.0",
+    "string-formatter": "^0.2.1",
+    "yargs": "^3.8.0"
   }
 }
