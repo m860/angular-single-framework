@@ -8,12 +8,4 @@ define(["app"], function (app) {
     });
     return app;
 
-    //return function($scope){
-    //    $scope.title = "default";
-    //};
-
-    //return ["$scope", function ($scope) {
-    //    $scope.title = "default";
-    //}];
-
 });
