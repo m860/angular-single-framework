@@ -50,12 +50,12 @@ define(["angularAMD", "app.config"], function (angularAMD, config) {
     }
 
 
-    app.config(function ($routeProvider) {
+    app.config(["$routeProvider",function ($routeProvider) {
         config.route.mapping.each(function (ele, index, self) {
             $routeProvider.when(ele.url,
                 angularAMD.route(configRoute(ele["templateUrl"], ele["controllerUrl"], ele["controller"])));
         });
-    });
+    }]);
 
     return angularAMD.bootstrap(app);
 

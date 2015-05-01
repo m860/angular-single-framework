@@ -3,9 +3,9 @@
  */
 define(["app"], function (app) {
 
-    app.controller("default", function ($scope) {
+    app.controller("default", ["$scope", function ($scope) {
         $scope.title = "default";
-    });
+    }]);
     return app;
 
 });

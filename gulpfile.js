@@ -71,14 +71,14 @@ gulp.task("build:app:config", function (cb) {
 gulp.task("build:app:controllers", function (cb) {
     var stream = gulp.src(path.join(root, "app/js/controllers/") + "**");
     if (args.env === ENV.prd) {
-        stream = stream.pipe(uglify());
+        stream = stream.pipe(uglify({mangle: false}));
     }
     return stream.pipe(gulp.dest(path.join(root, "dist/app/js/controllers/")));
 });
 gulp.task("build:app:js", function (cb) {
     var stream = gulp.src(path.join(root, "app/js/") + "*.js");
     if (args.env === ENV.prd) {
-        stream = stream.pipe(uglify());
+        stream = stream.pipe(uglify({mangle: false}));
     }
     return stream.pipe(gulp.dest(path.join(root, "dist/app/js/")));
 });
@@ -108,14 +108,16 @@ gulp.task("clean:app", function (cb) {
 });
 gulp.task("build:app", gulpsync.sync([
     "clean:app"
-    , "build:app:index"
-    , "build:app:views"
-    , "build:app:js"
-    , "build:app:config"
-    , "build:app:controllers"
-    , "build:app:lib"
-    , "copy:app:lib-fonts"
-    , "build:app:lib-css"
+    , [
+        "build:app:index"
+        , "build:app:views"
+        , "build:app:js"
+        , "build:app:config"
+        , "build:app:controllers"
+        , "build:app:lib"
+        , "copy:app:lib-fonts"
+        , "build:app:lib-css"
+    ]
 ]));
 
 gulp.task("default", []);
