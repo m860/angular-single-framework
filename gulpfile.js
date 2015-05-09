@@ -10,6 +10,8 @@ var gulp = require("gulp")
     , gulpsync = require('gulp-sync')(gulp)
     , rimraf = require("rimraf")
     , minifyCss = require('gulp-minify-css')
+    , less = require("gulp-less")
+    , livereload = require('gulp-livereload')
     , path = require("path");
 
 
@@ -106,6 +108,29 @@ gulp.task("clean:app", function (cb) {
     rimraf.sync(path.join(root, "dist/app"));
     return cb();
 });
+
+gulp.task("less", function (cb) {
+    return gulp.src(path.join(root, "app/less/") + "*.less")
+        .pipe(less())
+        .pipe(gulp.dest(path.join(root, "app/css")))
+});
+
+gulp.task("reload",function(cb){
+    return gulp.src(path.join(root,"app/")+"**/*.*")
+        .pipe(livereload());
+});
+
+gulp.task("watch:app", function (cb) {
+    livereload.listen();
+    gulp.watch([
+        path.join(root, "app/**/*.*")
+    ], [
+        "less"
+        ,"reload"
+    ]);
+    return cb();
+});
+
 gulp.task("build:app", gulpsync.sync([
     "clean:app"
     , [
@@ -120,4 +145,7 @@ gulp.task("build:app", gulpsync.sync([
     ]
 ]));
 
-gulp.task("default", []);
+gulp.task("default", [
+    "less"
+    , "watch:app"
+]);
