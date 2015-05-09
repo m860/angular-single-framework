@@ -11,6 +11,11 @@ define({
     , controllerPath: "controllers/"
     //template的根目录
     , templatePath: "views/"
+    //loading
+    //@string
+    //@gif
+    //@function return html string
+    ,loading:"Loading..."
     //路由映射
     , route: [{
         //必填,访问的url地址

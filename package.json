@@ -14,5 +14,8 @@
     "rimraf": "^2.3.3",
     "string-formatter": "^0.2.1",
     "yargs": "^3.8.0"
+  },
+  "dependencies": {
+    "express": "^4.12.3"
   }
 }
