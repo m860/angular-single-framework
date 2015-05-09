@@ -10,7 +10,7 @@ require.config({
         , "app": "app"
         , "app.config": "config/app.config"
         , "angular-route": "lib/angular-route/angular-route"
-        , "jsext": "jsext.min"
+        , "jsext": "jsext"
     }
     , shim: {
         "angular": ["jquery"]
