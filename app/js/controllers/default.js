@@ -3,10 +3,10 @@
  */
 define(["app","page"], function (app,page) {
 
-    page.setTitle("Default");
+    page.setTitle("AngularAMD-template");
 
     app.controller("default", ["$scope", function ($scope) {
-        $scope.title = "default";
+        $scope.title = "angularAMD-template Summary";
     }]);
     return app;
 

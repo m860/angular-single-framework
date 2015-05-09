@@ -1,0 +1,34 @@
+*{
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+h1{background:gray;}
+
+h3{background: #b0c6c5;}
+
+p{
+  span{
+    border-radius: 3px;
+    padding:3px;
+    color: white;
+  }
+  .path{
+    background: green;
+  }
+  .required{
+    background: red;
+    margin:0 5px ;
+  }
+  .optional{
+    background: gray;
+    margin:0 5px;
+  }
+  .property{
+    background-color: #1f4480;
+    display: inline-block;
+    width:100px;
+    &:after{
+      content: ":";
+    }
+  }
+}

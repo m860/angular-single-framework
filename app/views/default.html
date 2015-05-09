@@ -1,2 +1,17 @@
 <h1>{{title}}</h1>
-<p>{{1+1}}</p>
+<p>基于angularAMD的一个模板工程</p>
+<p>route的配置文件位于:<span class="path">app/js/config/app.config.js</span></p>
+<h3>appName配置</h3>
+<p>angular module name</p>
+<h3>controllerPath配置</h3>
+<p>配置所有controller的根目录</p>
+<h3>templatePath配置</h3>
+<p>配置所有view的根目录</p>
+<h3>route配置</h3>
+<p>url,view,controller映射关系配置</p>
+<p><span class="property">url</span><span class="required">Required</span>访问的url地址</p>
+<p><span class="property">templateUrl</span><span class="required">Required</span>view的地址</p>
+<p><span class="property">controllerUrl</span><span class="optional">Optional</span>如果缺省,则controllerUrl会根据templateUrl进行设置
+</p>
+<p><span class="property">controller</span><span class="optional">Optional</span>如果缺省,则controller会根据controllerUrl进行设置
+</p>

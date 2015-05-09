@@ -10,19 +10,19 @@ define(["angularAMD", "app.config"], function (angularAMD, config) {
 
         if (!_controllerUrl) {
 
-            if (!config.route.controllerPath) {
+            if (!config.controllerPath) {
                 throw new Error("controllerPath is not defined");
             }
 
             var lastDot = templateUrl.lastIndexOf(".");
-            _controllerUrl = config.route.controllerPath + templateUrl.slice(0, lastDot);
+            _controllerUrl = config.controllerPath + templateUrl.slice(0, lastDot);
             console.log("controllerUrl : %s", _controllerUrl);
         }
 
-        if(!config.route.templatePath){
+        if(!config.templatePath){
             throw new Error("templatePath is not defined");
         }
-        templateUrl=config.route.templatePath+templateUrl;
+        templateUrl=config.templatePath+templateUrl;
         console.log("templateUrl : %s",templateUrl);
 
         var cfg = {
@@ -51,7 +51,7 @@ define(["angularAMD", "app.config"], function (angularAMD, config) {
 
 
     app.config(["$routeProvider",function ($routeProvider) {
-        config.route.mapping.each(function (ele, index, self) {
+        config.route.each(function (ele, index, self) {
             $routeProvider.when(ele.url,
                 angularAMD.route(configRoute(ele["templateUrl"], ele["controllerUrl"], ele["controller"])));
         });
