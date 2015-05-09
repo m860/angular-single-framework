@@ -12,13 +12,15 @@ require.config({
         , "angular-route": "lib/angular-route/angular-route"
         , "jsext": "jsext"
         , "bootstrap": "lib/bootstrap/dist/js/bootstrap"
+        , "page": "page"
     }
     , shim: {
         "angular": ["jquery"]
         , "angular-route": ["angular"]
         , "angularAMD": ["angular-route"]
         , "bootstrap": ["jquery"]
-        , "app": ["angularAMD", "app.config", "jsext", "bootstrap"]
+        , "page": ["jquery"]
+        , "app": ["angularAMD", "app.config", "jsext", "bootstrap", "page"]
     }
     , deps: ["app"]
 });
