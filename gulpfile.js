@@ -5,12 +5,12 @@ var gulp = require("gulp")
     , uglify = require('gulp-uglify')
     , concat = require("gulp-concat")
     , argv = require('yargs').argv
-    , gulpHelper = require("./gulp-helper.js")
+    , _ = require("./gulp-helper.js")
     , minifyHTML = require('gulp-minify-html')
     , gulpsync = require('gulp-sync')(gulp)
     , rimraf = require("rimraf")
     , minifyCss = require('gulp-minify-css')
-    , less = require('gulp-less')
+    , less = require("gulp-less")
     , livereload = require('gulp-livereload')
     , path = require("path");
 
@@ -23,11 +23,11 @@ var args = {
     env: argv.env || ENV.qa
 };
 
-gulpHelper.i("env : %s", args.env);
+_.i("env : %s", args.env);
 
 var root = path.normalize(__dirname + "/");
 
-gulpHelper.i("root path : %s", root);
+_.i("root path : %s", root);
 
 gulp.task("build:app:lib", function (cb) {
 
@@ -109,25 +109,24 @@ gulp.task("clean:app", function (cb) {
     return cb();
 });
 
-
 gulp.task("less", function (cb) {
     return gulp.src(path.join(root, "app/less/") + "*.less")
         .pipe(less())
         .pipe(gulp.dest(path.join(root, "app/css")))
+});
+
+gulp.task("reload",function(cb){
+    return gulp.src(path.join(root,"app/")+"**/*.*")
         .pipe(livereload());
 });
+
 gulp.task("watch:app", function (cb) {
     livereload.listen();
     gulp.watch([
-        path.join(root, "app/less/") + "*.less"
-        ,path.join(root,"app/index.html")
-        ,path.join(root,"app/views/**/*.html")
-        ,path.join(root,"app/js/config/*.js")
-        ,path.join(root,"app/js/controllers/*.js")
-        ,path.join(root,"app/js/app.js")
-        ,path.join(root,"app/js/jsext.js")
+        path.join(root, "app/**/*.*")
     ], [
         "less"
+        ,"reload"
     ]);
     return cb();
 });
