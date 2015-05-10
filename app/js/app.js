@@ -1,8 +1,7 @@
 /**
  * Created by Jean on 4/29/2015.
  */
-define(["angularAMD", "app.config"], function (angularAMD, config) {
-
+define(["angularAMD", "app.config","jquery-component"], function (angularAMD, config,jqueryComponent) {
 
     var app = angular.module(config.appName, ["ngRoute"]);
 
@@ -49,96 +48,7 @@ define(["angularAMD", "app.config"], function (angularAMD, config) {
         return cfg;
     }
 
-    function Loading(loadingStyle) {
-        this._arr = [];
-        this._loadingStyle = "";
-        switch (typeof(loadingStyle)) {
-            case "function":
-                this._loadingStyle = loadingStyle();
-                break;
-            default:
-                var reg = /\.gif$/i;
-                if (reg.test(loadingStyle)) {
-                    this._loadingStyle = '<img src="' + loadingStyle + '">';
-                }
-                else {
-                    this._loadingStyle = loadingStyle;
-                }
-        }
-
-        this._mask = '<div class="loading-mask"></div>';
-        this._loading = '<div class="loading"></div>';
-        this._startIndex = 10000;
-    }
-
-    Loading.prototype = {
-        appendLoading: function (container) {
-            var top = 0
-                , left = 0
-                , width
-                , height
-                , hideScreen = false
-                , zIndex = this._startIndex;
-
-            if (typeof(container) === "boolean") {
-                $(document.body).css("overflow", "hidden");
-                container = $(document.documentElement);
-                width = container.width();
-                height = container.height();
-                hideScreen = true;
-            }
-            else {
-                container = $(container);
-                width = container.outerWidth(true);
-                height = container.outerHeight(true);
-                var offset = container.offset();
-                top = offset.top;
-                left = offset.left;
-            }
-
-            //mask
-            var mask = $(this._mask);
-            zIndex += this._arr.length;
-            mask.css({
-                top: top
-                , left: left
-                , width: width
-                , height: height
-                , zIndex: zIndex
-            });
-            this._arr.push(mask);
-            mask.appendTo(document.body);
-
-            //loading
-            var loading = $(this._loading);
-            loading.html(this._loadingStyle);
-            zIndex += this._arr.length;
-            loading.css({
-                top: top + (height / 2)
-                , left: left
-                , width: width
-                , zIndex: zIndex
-            });
-            if (hideScreen) {
-                loading.css({
-                    top: top + (height / 2) + $(window).scrollTop()
-                });
-            }
-
-
-            this._arr.push(loading);
-            loading.appendTo(document.body);
-
-
-        },
-        removeLoading: function () {
-            this._arr.pop().remove();
-            this._arr.pop().remove();
-            $(document.body).css("overflow", "auto");
-        }
-    };
-
-    var loading = new Loading(config.loading);
+    var loading = new Component.Loading(config.loading);
 
     app.config(["$routeProvider", "$httpProvider", function ($routeProvider, $httpProvider) {
         config.route.each(function (ele, index, self) {

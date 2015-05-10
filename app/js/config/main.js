@@ -12,12 +12,17 @@ require.config({
         , "angular-route": "lib/angular-route/angular-route"
         , "jsext": "jsext"
         , "page": "page"
+        , "jquery-component": "jquery.component.all"
     }
     , shim: {
         "angular": ["jquery"]
         , "angular-route": ["angular"]
         , "angularAMD": ["angular-route"]
-        , "app": ["angularAMD", "app.config", "jsext","page"]
+        , "jquery-component": {
+            deps: ["jquery"]
+            , exports: "jqueryComponent"
+        }
+        , "app": ["angularAMD", "app.config", "jsext", "page", "jquery-component"]
     }
     , deps: ["app"]
 });
