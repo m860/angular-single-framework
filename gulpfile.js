@@ -112,37 +112,23 @@ gulp.task("clean:app", function (cb) {
 gulp.task("less", function (cb) {
     return gulp.src(path.join(root, "app/less/") + "**/*.less")
         .pipe(less())
-        .pipe(gulp.dest(path.join(root, "app/css")))
-        .pipe(livereload());
+        .pipe(gulp.dest(path.join(root, "app/css")));
+        //.pipe(livereload());
 });
-gulp.task("html", function (cb) {
+gulp.task("reload", function (cb) {
     return gulp.src([
-        path.join(root, "app/") + "*.html"
-        , path.join(root, "app/views/") + "**/*.html"
-    ])
-        .pipe(livereload());
-});
-gulp.task("js", function (cb) {
-    return gulp.src([
-        path.join(root, "app/js/config/") + "*.js"
-        , path.join(root, "app/js/controllers/") + "**/*.js"
-        , path.join(root, "app/js/") + "*.js"
+        path.join(root, "app/") + "**/*.*"
     ])
         .pipe(livereload());
 });
 
 gulp.task("watch", function (cb) {
     livereload.listen();
-    gulp.watch(path.join(root, "app/less/") + "**/*.less", ["less"]);
-    gulp.watch([
-        path.join(root, "app/") + "*.html"
-        , path.join(root, "app/views/") + "**/*.html"
-    ], ["html"]);
-    gulp.watch([
-        path.join(root, "app/js/config/") + "*.js"
-        , path.join(root, "app/js/controllers/") + "**/*.js"
-        , path.join(root, "app/js/") + "*.js"
-    ], ["js"]);
+    gulp.watch(path.join(root, "app/less/") + "**/*.less", ["less","reload"]);
+    gulp.watch(path.join(root, "app/views/") + "**/*.html", ["reload"]);
+    gulp.watch(path.join(root, "app/partial/") + "**/*.html", ["reload"]);
+    gulp.watch(path.join(root, "app/js/") + "*.js", ["reload"]);
+    gulp.watch(path.join(root, "app/js/controllers/") + "*.js", ["reload"]);
     return cb();
 });
 
@@ -162,7 +148,5 @@ gulp.task("build:app", gulpsync.sync([
 
 gulp.task("default", [
     "less"
-    , "html"
-    , "js"
     , "watch"
 ]);

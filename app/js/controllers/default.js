@@ -28,6 +28,11 @@ define(["app", "page"], function (app, page) {
             });
         };
 
+        //$scope.partialLoad=function(){
+        //    console.log("partial load");
+        //    require(["test"]);
+        //};
+
 
     }]);
     return app;

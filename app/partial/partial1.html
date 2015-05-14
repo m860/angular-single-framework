@@ -1,0 +1,9 @@
+<div>I am a partial</div>
+<script type="application/javascript" ng-require="test">
+    define("test",function(){
+        return function(scope){
+            console.log(scope.title);
+        }
+    });
+</script>
+<!--<ng-require value="test"></ng-require>-->

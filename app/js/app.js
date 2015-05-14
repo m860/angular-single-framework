@@ -1,7 +1,7 @@
 /**
  * Created by Jean on 4/29/2015.
  */
-define(["angularAMD", "app.config","jquery-component"], function (angularAMD, config,jqueryComponent) {
+define(["angularAMD", "app.config", "jquery-component"], function (angularAMD, config, jqueryComponent) {
 
     var app = angular.module(config.appName, ["ngRoute"]);
 
@@ -31,7 +31,14 @@ define(["angularAMD", "app.config","jquery-component"], function (angularAMD, co
 
         cfg.resolve = ["$q", "$rootScope", function ($q, $rootScope) {
             var defer = $q.defer();
+
+            //set ng-include onload
+            //$("ng-include,[ng-include]").bind("load",function(){
+            //    alert("sdf");
+            //});
+
             require([_controllerUrl], function (ctrl) {
+                console.log("controller loaded");
                 defer.resolve(ctrl);
                 $rootScope.$apply();
             });
@@ -50,6 +57,7 @@ define(["angularAMD", "app.config","jquery-component"], function (angularAMD, co
 
     var loading = new Component.Loading(config.loading);
 
+
     app.config(["$routeProvider", "$httpProvider", function ($routeProvider, $httpProvider) {
         config.route.each(function (ele, index, self) {
             $routeProvider.when(ele.url,
@@ -59,8 +67,8 @@ define(["angularAMD", "app.config","jquery-component"], function (angularAMD, co
         $httpProvider.interceptors.push(["$q", function ($q) {
             return {
                 request: function (cfg) {
-                    console.log("request config ...");
-                    console.log(cfg);
+                    //console.log("request config ...");
+                    //console.log(cfg);
                     if (cfg.params && cfg.params.loading) {
                         loading.appendLoading(cfg.params.loading);
                     }
@@ -70,8 +78,8 @@ define(["angularAMD", "app.config","jquery-component"], function (angularAMD, co
                     return $q.reject(rejection);
                 }
                 , response: function (response) {
-                    console.log("response ...");
-                    console.log(response);
+                    //console.log("response ...");
+                    //console.log(response);
                     if (response.config && response.config.params && response.config.params.loading) {
                         loading.removeLoading();
                     }
@@ -82,7 +90,18 @@ define(["angularAMD", "app.config","jquery-component"], function (angularAMD, co
                 }
             };
         }]);
-    }]);
+    }])
+        .directive("ngRequire", function () {
+            return function (scope, ele, attr) {
+                var moduleName = attr.ngRequire || attr.value;
+                console.log("module name : %s", moduleName);
+                require([moduleName], function (cb) {
+                    if (typeof(cb) === "function") {
+                        cb(scope);
+                    }
+                });
+            }
+        });
 
     return angularAMD.bootstrap(app);
 
