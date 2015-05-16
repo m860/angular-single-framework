@@ -11,7 +11,8 @@ var gulp = require("gulp")
     , rimraf = require("rimraf")
     , minifyCss = require('gulp-minify-css')
     , less = require("gulp-less")
-    , livereload = require('gulp-livereload')
+    , browserSync = require('browser-sync').create()
+    ,htmlInjector = require("bs-html-injector")
     , path = require("path");
 
 
@@ -112,24 +113,8 @@ gulp.task("clean:app", function (cb) {
 gulp.task("less", function (cb) {
     return gulp.src(path.join(root, "app/less/") + "**/*.less")
         .pipe(less())
-        .pipe(gulp.dest(path.join(root, "app/css")));
-        //.pipe(livereload());
-});
-gulp.task("reload", function (cb) {
-    return gulp.src([
-        path.join(root, "app/") + "**/*.*"
-    ])
-        .pipe(livereload());
-});
-
-gulp.task("watch", function (cb) {
-    livereload.listen();
-    gulp.watch(path.join(root, "app/less/") + "**/*.less", ["less","reload"]);
-    gulp.watch(path.join(root, "app/views/") + "**/*.html", ["reload"]);
-    gulp.watch(path.join(root, "app/partial/") + "**/*.html", ["reload"]);
-    gulp.watch(path.join(root, "app/js/") + "*.js", ["reload"]);
-    gulp.watch(path.join(root, "app/js/controllers/") + "*.js", ["reload"]);
-    return cb();
+        .pipe(gulp.dest(path.join(root, "app/css")))
+        .pipe(browserSync.reload({stream: true}));
 });
 
 gulp.task("build:app", gulpsync.sync([
@@ -146,7 +131,38 @@ gulp.task("build:app", gulpsync.sync([
     ]
 ]));
 
+gulp.task("browserSyncServer", function (cb) {
+    browserSync.init({
+        server: "./app"
+        //, scrollProportionally: false
+        //, reloadDelay: 1000
+        //, ghostMode: {
+        //    scroll: true
+        //}
+        ,plugins:["bs-html-injector"]
+        ,logLevel: "silent"
+        //,reloadOnRestart:true
+        ,online: false
+    });
+    return cb();
+});
+gulp.task("reload:html", function () {
+    return gulp.src("app/**/*.html")
+        .pipe(browserSync.reload({stream: true}));
+});
+gulp.task("reload:js", function () {
+    return gulp.src("app/**/*.js")
+        .pipe(browserSync.reload({stream: true}));
+});
+//ajax²»ÄÜinjected
+gulp.task("watch", ["less", "browserSyncServer"], function (cb) {
+    gulp.watch("app/**/*.less", ["less"]);
+    //gulp.watch("app/**/*.html", htmlInjector);
+    gulp.watch("app/**/*.html", ["reload:html"]);
+    gulp.watch("app/**/*.js", ["reload:js"]);
+    return cb();
+});
+
 gulp.task("default", [
-    "less"
-    , "watch"
+    "watch"
 ]);
