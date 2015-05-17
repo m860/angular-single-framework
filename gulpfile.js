@@ -12,7 +12,8 @@ var gulp = require("gulp")
     , minifyCss = require('gulp-minify-css')
     , less = require("gulp-less")
     , browserSync = require('browser-sync').create()
-    ,htmlInjector = require("bs-html-injector")
+    , htmlInjector = require("bs-html-injector")
+    , gulpLivereload = require("gulp-livereload")
     , path = require("path");
 
 
@@ -110,13 +111,6 @@ gulp.task("clean:app", function (cb) {
     return cb();
 });
 
-gulp.task("less", function (cb) {
-    return gulp.src(path.join(root, "app/less/") + "**/*.less")
-        .pipe(less())
-        .pipe(gulp.dest(path.join(root, "app/css")))
-        .pipe(browserSync.reload({stream: true}));
-});
-
 gulp.task("build:app", gulpsync.sync([
     "clean:app"
     , [
@@ -131,38 +125,24 @@ gulp.task("build:app", gulpsync.sync([
     ]
 ]));
 
-gulp.task("browserSyncServer", function (cb) {
-    browserSync.init({
-        server: "./app"
-        //, scrollProportionally: false
-        //, reloadDelay: 1000
-        //, ghostMode: {
-        //    scroll: true
-        //}
-        ,plugins:["bs-html-injector"]
-        ,logLevel: "silent"
-        //,reloadOnRestart:true
-        ,online: false
+
+gulp.task("watch", function (cb) {
+    gulpLivereload.listen();
+
+    gulp.watch("app/**/*.less",function(event){
+        gulp.src(event.path)
+            .pipe(less())
+            .pipe(gulp.dest("app/css/"));
     });
-    return cb();
-});
-gulp.task("reload:html", function () {
-    return gulp.src("app/**/*.html")
-        .pipe(browserSync.reload({stream: true}));
-});
-gulp.task("reload:js", function () {
-    return gulp.src("app/**/*.js")
-        .pipe(browserSync.reload({stream: true}));
-});
-//ajax²»ÄÜinjected
-gulp.task("watch", ["less", "browserSyncServer"], function (cb) {
-    gulp.watch("app/**/*.less", ["less"]);
-    //gulp.watch("app/**/*.html", htmlInjector);
-    gulp.watch("app/**/*.html", ["reload:html"]);
-    gulp.watch("app/**/*.js", ["reload:js"]);
+
+    gulp.watch([
+        "app/**/*"
+        ,"!app/**/*.less"
+    ],  function (event) {
+        gulpLivereload.reload({path:event.path});
+    });
+
     return cb();
 });
 
-gulp.task("default", [
-    "watch"
-]);
+gulp.task("default", ["watch"]);
