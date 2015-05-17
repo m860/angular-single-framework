@@ -101,7 +101,14 @@ define(["angularAMD", "app.config", "jquery-component"], function (angularAMD, c
                     }
                 });
             }
-        });
+        })
+        .directive("urlMatch",["$location",function($location){
+            var path=$location.path();
+            return function(scope,ele,attr){
+                var className=attr.urlMatch;
+
+            }
+        }]);
 
     return angularAMD.bootstrap(app);
 
