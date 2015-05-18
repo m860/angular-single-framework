@@ -26,24 +26,25 @@ define(["angularAMD", "app.config", "jquery-component"], function (angularAMD, c
 
         var cfg = {
             templateUrl: templateUrl
+            ,controllerUrl:_controllerUrl
         };
 
 
-        cfg.resolve = ["$q", "$rootScope", function ($q, $rootScope) {
-            var defer = $q.defer();
-
-            //set ng-include onload
-            //$("ng-include,[ng-include]").bind("load",function(){
-            //    alert("sdf");
-            //});
-
-            require([_controllerUrl], function (ctrl) {
-                console.log("controller loaded");
-                defer.resolve(ctrl);
-                $rootScope.$apply();
-            });
-            return defer.promise;
-        }];
+        //cfg.resolve = ["$q", "$rootScope", function ($q, $rootScope) {
+        //    var defer = $q.defer();
+        //
+        //    //set ng-include onload
+        //    //$("ng-include,[ng-include]").bind("load",function(){
+        //    //    alert("sdf");
+        //    //});
+        //
+        //    require([_controllerUrl], function (ctrl) {
+        //        console.log("controller loaded");
+        //        defer.resolve(ctrl);
+        //        $rootScope.$apply();
+        //    });
+        //    return defer.promise;
+        //}];
 
         if (!_controller) {
             var last = _controllerUrl.lastIndexOf("/");
@@ -51,6 +52,8 @@ define(["angularAMD", "app.config", "jquery-component"], function (angularAMD, c
         }
         console.log("controller : %s", _controller);
         cfg.controller = _controller;
+
+        console.log(cfg);
 
         return cfg;
     }
@@ -102,11 +105,21 @@ define(["angularAMD", "app.config", "jquery-component"], function (angularAMD, c
                 });
             }
         })
-        .directive("urlMatch",["$location",function($location){
-            var path=$location.path();
-            return function(scope,ele,attr){
-                var className=attr.urlMatch;
-
+        .directive("urlMatch", ["$location", function ($location) {
+            var path = $location.path();
+            console.log("location path : %s", path);
+            return function (scope, ele, attr) {
+                var strs = attr.urlMatch.split(":");
+                var name = strs[0];
+                var className = strs[1];
+                var route = config.route.find(function (item) {
+                    return item.name == name;
+                });
+                if (route) {
+                    if (route.url === path) {
+                        ele.addClass(className);
+                    }
+                }
             }
         }]);
 

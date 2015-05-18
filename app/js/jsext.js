@@ -2,7 +2,7 @@
 * Author : Jean
 * Email  : jean.ma.1986@gmail.com
 * Url    : https://github.com/m860/jsext
-* Date   : Sat May 09 2015 11:25:34
+* Date   : Mon May 18 2015 21:30:26
 */
 /*
 * @item:Array的元素
@@ -45,5 +45,22 @@ if (!Function.prototype.bind) {
         fNOP.prototype = this.prototype;
         fBound.prototype = new fNOP();
         return fBound;
+    };
+}
+/*!
+ * Created by Jean on 5/18/2015.
+ * 
+ * email:mahai_1986@126.com
+ *
+ */
+if(!Array.prototype.find){
+    Array.prototype.find=function(fn){
+        var i= 0,len=this.length;
+        for(;i<len;i++){
+            if(fn(this[i])){
+                return this[i];
+            }
+        }
+        return null;
     };
 }

@@ -2,38 +2,44 @@
  * Created by Jean on 4/29/2015.
  */
 
-//µ±Ç°Ä¿Â¼ËùÔÚµÄ¸ùÄ¿Â¼ÔÚindex.htmlËùÔÚµÄÄ¿Â¼
+//å½“å‰ç›®å½•æ‰€åœ¨çš„æ ¹ç›®å½•åœ¨index.htmlæ‰€åœ¨çš„ç›®å½•
 define({
     //app name
     appName: "app"
-    //controllerµÄ¸ùÄ¿Â¼
-    //½Úµã¸ùÂ·¾¶´Ómain.jsµÄpaths¿ªÊ¼
+    //controllerçš„æ ¹ç›®å½•
+    //èŠ‚ç‚¹æ ¹è·¯å¾„ä»Žmain.jsçš„pathså¼€å§‹
     , controllerPath: "controllers/"
-    //templateµÄ¸ùÄ¿Â¼
+    //templateçš„æ ¹ç›®å½•
     , templatePath: "views/"
     //loading
     //@string
     //@gif
     //@function return html string
-    ,loading:"Loading..."
-    //Â·ÓÉÓ³Éä
+    , loading: "Loading..."
+    //è·¯ç”±æ˜ å°„
     , route: [{
-        //±ØÌî,·ÃÎÊµÄurlµØÖ·
+        //å¿…å¡«,è®¿é—®çš„urlåœ°å€
         url: "/"
 
-        //±ØÌî
-        //Ïà¶ÔÓÚtemplatePathµÄtemplateµØÖ·
+        , name: "default"
+
+        //å¿…å¡«
+        //ç›¸å¯¹äºŽtemplatePathçš„templateåœ°å€
         , templateUrl: "default.html"
 
-        //Ñ¡Ìî,Èç¹ûÈ±Ê¡,ÔòcontrollerUrl»á¸ù¾ÝtemplateUrl½øÐÐÉèÖÃ
-        //Èçdefault.html,ÔòÉú³ÉµÄcontrollerUrlµØÖ·Îªdefault
-        //ÔÙÈç:user/index.html,ÔòÉú³É½á¹ûÎª:user/index
+        //é€‰å¡«,å¦‚æžœç¼ºçœ,åˆ™controllerUrlä¼šæ ¹æ®templateUrlè¿›è¡Œè®¾ç½®
+        //å¦‚default.html,åˆ™ç”Ÿæˆçš„controllerUrlåœ°å€ä¸ºdefault
+        //å†å¦‚:user/index.html,åˆ™ç”Ÿæˆç»“æžœä¸º:user/index
         //, controllerUrl: "default"
 
-        //Ñ¡Ìî,Èç¹ûÈ±Ê¡,Ôòcontroller»á¸ù¾ÝcontrollerUrl½øÐÐÉèÖÃ
+        //é€‰å¡«,å¦‚æžœç¼ºçœ,åˆ™controllerä¼šæ ¹æ®controllerUrlè¿›è¡Œè®¾ç½®
         //controllerUrl:default --> controller:default
         //controllerUrl:user/index --> controller:index
         //, controller: "default"
+    }, {
+        name: "test"
+        , url: "/test"
+        , templateUrl: "test.html"
     }]
 
 });
