@@ -7,7 +7,8 @@
 define("page",function(){
     var page={
         setTitle:function(title){
-            $("title").text(title);
+            //$("title").text(title);
+            $(document).attr("title",title);
         }
     };
 
