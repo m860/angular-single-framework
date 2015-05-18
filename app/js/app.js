@@ -15,18 +15,18 @@ define(["angularAMD", "app.config", "jquery-component"], function (angularAMD, c
 
             var lastDot = templateUrl.lastIndexOf(".");
             _controllerUrl = config.controllerPath + templateUrl.slice(0, lastDot);
-            console.log("controllerUrl : %s", _controllerUrl);
+            //console.log("controllerUrl : %s", _controllerUrl);
         }
 
         if (!config.templatePath) {
             throw new Error("templatePath is not defined");
         }
         templateUrl = config.templatePath + templateUrl;
-        console.log("templateUrl : %s", templateUrl);
+        //console.log("templateUrl : %s", templateUrl);
 
         var cfg = {
             templateUrl: templateUrl
-            ,controllerUrl:_controllerUrl
+            , controllerUrl: _controllerUrl
         };
 
 
@@ -50,10 +50,8 @@ define(["angularAMD", "app.config", "jquery-component"], function (angularAMD, c
             var last = _controllerUrl.lastIndexOf("/");
             _controller = _controllerUrl.slice(last + 1);
         }
-        console.log("controller : %s", _controller);
+        //console.log("controller : %s", _controller);
         cfg.controller = _controller;
-
-        console.log(cfg);
 
         return cfg;
     }
@@ -97,7 +95,6 @@ define(["angularAMD", "app.config", "jquery-component"], function (angularAMD, c
         .directive("ngRequire", function () {
             return function (scope, ele, attr) {
                 var moduleName = attr.ngRequire || attr.value;
-                console.log("module name : %s", moduleName);
                 require([moduleName], function (cb) {
                     if (typeof(cb) === "function") {
                         cb(scope);
@@ -106,9 +103,8 @@ define(["angularAMD", "app.config", "jquery-component"], function (angularAMD, c
             }
         })
         .directive("urlMatch", ["$location", function ($location) {
-            var path = $location.path();
-            console.log("location path : %s", path);
             return function (scope, ele, attr) {
+                var path = $location.path();
                 var strs = attr.urlMatch.split(":");
                 var name = strs[0];
                 var className = strs[1];
