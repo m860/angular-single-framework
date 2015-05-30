@@ -42,4 +42,8 @@ define({
         , templateUrl: "test.html"
     }]
 
+    ,service:{
+        host:"http://127.0.0.1"
+    }
+
 });

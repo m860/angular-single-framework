@@ -11,7 +11,6 @@ require.config({
         , "app.config": "config/app.config"
         , "angular-route": "lib/angular-route/angular-route"
         , "jsext": "jsext"
-        , "page": "page"
         , "jquery-component": "jquery.component.all"
     }
     , shim: {
@@ -22,7 +21,7 @@ require.config({
             deps: ["jquery"]
             , exports: "jqueryComponent"
         }
-        , "app": ["angularAMD", "app.config", "jsext", "page", "jquery-component"]
+        , "app": ["angularAMD", "app.config", "jsext", "jquery-component"]
     }
     , deps: ["app"]
 });

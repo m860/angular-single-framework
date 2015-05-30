@@ -119,6 +119,11 @@ define(["angularAMD", "app.config", "jquery-component"], function (angularAMD, c
             }
         }]);
 
+    //extend $scope
+    app.run(function($rootScope) {
+        //TODO 可以添加任意的基类方法或者属性
+    });
+
     return angularAMD.bootstrap(app);
 
 });
